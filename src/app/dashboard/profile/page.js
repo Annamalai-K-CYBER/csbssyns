@@ -5,10 +5,17 @@ import { jwtDecode } from "jwt-decode";
 
 export default function ProfilePage() {
   const [user, setUser] = useState(null);
+
   const [showChangePassword, setShowChangePassword] = useState(false);
   const [showAddEmail, setShowAddEmail] = useState(false);
 
+  // ⭐ NEW: Change secondary email UI toggle
+  const [showChangeEmail, setShowChangeEmail] = useState(false);
+
   const [email1, setEmail1] = useState("");
+
+  // ⭐ NEW: input value for changing email1
+  const [newEmail1, setNewEmail1] = useState("");
 
   const [form, setForm] = useState({
     currentPassword: "",
@@ -29,7 +36,9 @@ export default function ProfilePage() {
     }
   }, []);
 
-  // 🔹 Add Secondary Email Handler
+  // ------------------------------
+  //  ADD SECONDARY EMAIL
+  // ------------------------------
   const handleAddEmail = async (e) => {
     e.preventDefault();
 
@@ -65,7 +74,47 @@ export default function ProfilePage() {
     }
   };
 
-  // 🔹 Password Change Handler
+  // ------------------------------
+  //  ⭐ NEW: CHANGE SECONDARY EMAIL
+  // ------------------------------
+  const handleChangeEmail = async (e) => {
+    e.preventDefault();
+
+    if (!newEmail1.trim()) {
+      alert("Please enter a valid new email!");
+      return;
+    }
+
+    try {
+      const res = await fetch("https://csbssync.vercel.app/api/changeemail1", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: user?.email,
+          email1: newEmail1,
+        }),
+      });
+
+      const data = await res.json();
+
+      if (data.success) {
+        alert("Secondary email updated successfully!");
+
+        // update UI
+        setUser({ ...user, email1: newEmail1 });
+        setNewEmail1("");
+        setShowChangeEmail(false);
+      } else {
+        alert(data.message || "Failed to update email!");
+      }
+    } catch {
+      alert("Server error! Try again later.");
+    }
+  };
+
+  // ------------------------------
+  //  CHANGE PASSWORD
+  // ------------------------------
   const handlePasswordChange = async (e) => {
     e.preventDefault();
     if (form.newPassword !== form.confirmPassword) {
@@ -114,6 +163,7 @@ export default function ProfilePage() {
                 <span className="font-medium text-gray-700">Username:</span>
                 <span className="text-gray-800">{user.username}</span>
               </div>
+
               <div className="flex justify-between border-b border-gray-300 pb-2">
                 <span className="font-medium text-gray-700">Email:</span>
                 <span className="text-gray-800 break-all">{user.email}</span>
@@ -121,13 +171,15 @@ export default function ProfilePage() {
 
               {user.email1 && (
                 <div className="flex justify-between border-b border-gray-300 pb-2">
-                  <span className="font-medium text-gray-700">Secondary Email:</span>
+                  <span className="font-medium text-gray-700">
+                    Secondary Email:
+                  </span>
                   <span className="text-gray-800 break-all">{user.email1}</span>
                 </div>
               )}
             </div>
 
-            {/* Add Secondary Email Button */}
+            {/* ADD SECONDARY EMAIL BUTTON */}
             {!user.email1 && (
               <button
                 onClick={() => setShowAddEmail(!showAddEmail)}
@@ -137,7 +189,7 @@ export default function ProfilePage() {
               </button>
             )}
 
-            {/* Add Email Form */}
+            {/* ADD EMAIL FORM */}
             {showAddEmail && (
               <form onSubmit={handleAddEmail} className="mt-3 space-y-3 text-sm">
                 <input
@@ -157,7 +209,41 @@ export default function ProfilePage() {
               </form>
             )}
 
-            {/* Change Password Button */}
+            {/* ⭐ NEW: CHANGE SECONDARY EMAIL BUTTON (ONLY IF EMAIL1 EXISTS) */}
+            {user.email1 && (
+              <button
+                onClick={() => setShowChangeEmail(!showChangeEmail)}
+                className="w-full mt-3 py-2 font-semibold text-white bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-orange-500 hover:to-yellow-500 transition rounded-md"
+              >
+                {showChangeEmail ? "Cancel" : "Change Secondary Email"}
+              </button>
+            )}
+
+            {/* ⭐ NEW: CHANGE SECONDARY EMAIL FORM */}
+            {showChangeEmail && (
+              <form
+                onSubmit={handleChangeEmail}
+                className="mt-3 space-y-3 text-sm"
+              >
+                <input
+                  type="email"
+                  placeholder="Enter new secondary email"
+                  value={newEmail1}
+                  onChange={(e) => setNewEmail1(e.target.value)}
+                  required
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-400"
+                />
+
+                <button
+                  type="submit"
+                  className="w-full py-2 text-white font-semibold bg-gradient-to-r from-orange-400 to-yellow-500 hover:from-yellow-500 hover:to-orange-400 transition rounded-md"
+                >
+                  Update Secondary Email
+                </button>
+              </form>
+            )}
+
+            {/* CHANGE PASSWORD BUTTON */}
             <button
               onClick={() => setShowChangePassword(!showChangePassword)}
               className="w-full mt-4 py-2 font-semibold text-white bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-indigo-500 hover:to-blue-500 transition rounded-md"
@@ -165,7 +251,7 @@ export default function ProfilePage() {
               {showChangePassword ? "Cancel" : "Change Password"}
             </button>
 
-            {/* Change Password Form */}
+            {/* CHANGE PASSWORD FORM */}
             {showChangePassword && (
               <form onSubmit={handlePasswordChange} className="mt-6 space-y-3 text-sm">
                 <input
@@ -178,6 +264,7 @@ export default function ProfilePage() {
                   required
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-400"
                 />
+
                 <input
                   type="password"
                   placeholder="New Password"
@@ -188,6 +275,7 @@ export default function ProfilePage() {
                   required
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-400"
                 />
+
                 <input
                   type="password"
                   placeholder="Confirm Password"
@@ -198,6 +286,7 @@ export default function ProfilePage() {
                   required
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
                 />
+
                 <button
                   type="submit"
                   className="w-full py-2 text-white font-semibold bg-gradient-to-r from-indigo-400 to-blue-500 hover:from-blue-500 hover:to-indigo-400 transition rounded-md"
