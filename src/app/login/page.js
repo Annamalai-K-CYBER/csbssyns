@@ -9,12 +9,10 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  // 🔹 Redirect if already logged in
+  // Redirect if already logged in
   useEffect(() => {
     const token = localStorage.getItem("token");
-    if (token) {
-      router.push("/dashboard");
-    }
+    if (token) router.push("/dashboard");
   }, [router]);
 
   const handleLogin = async (e) => {
@@ -25,9 +23,7 @@ export default function LoginPage() {
     try {
       const res = await fetch("/api/login", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
       });
 
@@ -40,17 +36,13 @@ export default function LoginPage() {
       }
 
       if (data?.token) {
-        // ✅ Store token & role in localStorage
         localStorage.setItem("token", data.token);
-        if (data?.user?.role) {
-          localStorage.setItem("role", data.user.role);
-        }
-
+        if (data?.user?.role) localStorage.setItem("role", data.user.role);
         router.push("/dashboard");
       } else {
         setError("No token received from server");
       }
-    } catch (err) {
+    } catch {
       setError("Server not reachable");
     } finally {
       setLoading(false);
@@ -58,52 +50,58 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-700 via-purple-600 to-pink-500 text-white px-4">
-      <div className="bg-white/10 backdrop-blur-xl rounded-2xl shadow-2xl w-full max-w-md p-8 border border-white/20">
-        <h1 className="text-4xl font-extrabold text-center mb-2">CSBS Sync</h1>
-        <p className="text-center text-white/80 mb-8">
+    <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
+      <div className="bg-gradient-to-br from-white to-gray-50 rounded-3xl shadow-2xl w-full max-w-md p-10 border border-gray-200 animate-fadeIn">
+        <h1 className="text-4xl font-extrabold text-center mb-2 text-gray-800">
+          CSBS Sync
+        </h1>
+        <p className="text-center text-gray-500 mb-10 text-lg">
           Stay connected. Learn. Collaborate. 🚀
         </p>
 
         <form onSubmit={handleLogin} className="space-y-6">
           <div>
-            <label className="block text-sm font-medium mb-2">Id</label>
+            <label className="block text-sm font-medium mb-2 text-gray-700">
+              Id
+            </label>
             <input
               type="email"
               placeholder="Enter your Id"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              className="w-full px-4 py-2 rounded-lg bg-white/20 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-yellow-400"
+              className="w-full px-5 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-yellow-400 transition duration-200 bg-white"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium mb-2">Password</label>
+            <label className="block text-sm font-medium mb-2 text-gray-700">
+              Password
+            </label>
             <input
               type="password"
               placeholder="Enter your password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              className="w-full px-4 py-2 rounded-lg bg-white/20 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-yellow-400"
+              className="w-full px-5 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-yellow-400 transition duration-200 bg-white"
             />
           </div>
 
           {error && (
-            <p className="text-red-300 text-center font-medium">{error}</p>
+            <p className="text-red-500 text-center font-medium">{error}</p>
           )}
 
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-3 mt-4 bg-yellow-400 text-black font-semibold rounded-xl hover:bg-yellow-300 transition-transform transform hover:scale-105 disabled:opacity-50"
+            className="w-full py-3 mt-4 bg-gradient-to-r from-yellow-400 to-yellow-300 text-gray-900 font-semibold rounded-xl hover:scale-105 transform transition duration-300 shadow-md disabled:opacity-50"
           >
             {loading ? "Logging in..." : "Login"}
           </button>
         </form>
 
-        <footer className="mt-8 text-center text-xs text-white/60">
+        <footer className="mt-8 text-center text-xs text-gray-400">
           © {new Date().getFullYear()} CSBS Sync | Built with ❤️ by Students
         </footer>
       </div>

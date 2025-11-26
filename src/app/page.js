@@ -50,8 +50,8 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
-      <div className="bg-white rounded-3xl shadow-2xl w-full max-w-md p-10 border border-gray-200 animate-fadeIn">
+    <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
+      <div className="bg-gradient-to-br from-white to-gray-50 rounded-3xl shadow-2xl w-full max-w-md p-10 border border-gray-200 animate-fadeIn">
         <h1 className="text-4xl font-extrabold text-center mb-2 text-gray-800">
           CSBS Sync
         </h1>
@@ -70,7 +70,7 @@ export default function LoginPage() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              className="w-full px-5 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-yellow-400 transition duration-200"
+              className="w-full px-5 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-yellow-400 transition duration-200 bg-white"
             />
           </div>
 
@@ -84,7 +84,7 @@ export default function LoginPage() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              className="w-full px-5 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-yellow-400 transition duration-200"
+              className="w-full px-5 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-yellow-400 transition duration-200 bg-white"
             />
           </div>
 
@@ -95,7 +95,7 @@ export default function LoginPage() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-3 mt-4 bg-yellow-400 text-gray-900 font-semibold rounded-xl hover:bg-yellow-300 hover:scale-105 transform transition duration-300 shadow-md disabled:opacity-50"
+            className="w-full py-3 mt-4 bg-gradient-to-r from-yellow-400 to-yellow-300 text-gray-900 font-semibold rounded-xl hover:scale-105 transform transition duration-300 shadow-md disabled:opacity-50"
           >
             {loading ? "Logging in..." : "Login"}
           </button>
