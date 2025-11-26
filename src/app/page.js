@@ -50,18 +50,18 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-tr from-indigo-800 via-purple-700 to-pink-600 px-4">
-      <div className="bg-white/10 backdrop-blur-xl rounded-3xl shadow-2xl w-full max-w-md p-10 border border-white/20 animate-fadeIn">
-        <h1 className="text-5xl font-extrabold text-center mb-2 text-white drop-shadow-lg">
+    <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
+      <div className="bg-white rounded-3xl shadow-2xl w-full max-w-md p-10 border border-gray-200 animate-fadeIn">
+        <h1 className="text-4xl font-extrabold text-center mb-2 text-gray-800">
           CSBS Sync
         </h1>
-        <p className="text-center text-white/80 mb-10 text-lg">
+        <p className="text-center text-gray-500 mb-10 text-lg">
           Stay connected. Learn. Collaborate. 🚀
         </p>
 
         <form onSubmit={handleLogin} className="space-y-6">
-          <div className="relative">
-            <label className="block text-sm font-medium mb-2 text-white/90">
+          <div>
+            <label className="block text-sm font-medium mb-2 text-gray-700">
               Id
             </label>
             <input
@@ -70,12 +70,12 @@ export default function LoginPage() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              className="w-full px-5 py-3 rounded-xl bg-white/20 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-yellow-400 transition duration-200"
+              className="w-full px-5 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-yellow-400 transition duration-200"
             />
           </div>
 
-          <div className="relative">
-            <label className="block text-sm font-medium mb-2 text-white/90">
+          <div>
+            <label className="block text-sm font-medium mb-2 text-gray-700">
               Password
             </label>
             <input
@@ -84,24 +84,24 @@ export default function LoginPage() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              className="w-full px-5 py-3 rounded-xl bg-white/20 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-yellow-400 transition duration-200"
+              className="w-full px-5 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-yellow-400 transition duration-200"
             />
           </div>
 
           {error && (
-            <p className="text-red-400 text-center font-medium">{error}</p>
+            <p className="text-red-500 text-center font-medium">{error}</p>
           )}
 
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-3 mt-4 bg-gradient-to-r from-yellow-400 to-yellow-300 text-black font-semibold rounded-xl hover:scale-105 transform transition duration-300 shadow-md disabled:opacity-50"
+            className="w-full py-3 mt-4 bg-yellow-400 text-gray-900 font-semibold rounded-xl hover:bg-yellow-300 hover:scale-105 transform transition duration-300 shadow-md disabled:opacity-50"
           >
             {loading ? "Logging in..." : "Login"}
           </button>
         </form>
 
-        <footer className="mt-8 text-center text-xs text-white/60">
+        <footer className="mt-8 text-center text-xs text-gray-400">
           © {new Date().getFullYear()} CSBS Sync | Built with ❤️ by Students
         </footer>
       </div>
