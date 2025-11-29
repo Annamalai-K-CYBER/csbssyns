@@ -1,7 +1,7 @@
 import "./../styles/globals.css";
 import { Analytics } from "@vercel/analytics/next"
 export const metadata = {
-  title: "CSBS SYNC",
+  title: "Trustify",
   description: "Official class portal for CSBS Department",
 };
 
