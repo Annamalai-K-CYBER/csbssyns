@@ -33,7 +33,7 @@ export default function DashboardHome() {
     <div className="text-center py-10 px-4 bg-gradient-to-br from-indigo-50 to-purple-50 min-h-screen">
       {/* Header */}
       <h1 className="text-4xl font-extrabold text-indigo-800 mb-4 drop-shadow-sm">
-        🎓 Welcome to Trustify
+        🎓 Welcome to CSBS SYNC
       </h1>
       <p className="text-gray-700 max-w-2xl mx-auto mb-10 leading-relaxed">
         Your all-in-one dashboard for study materials, assignments, and

@@ -53,7 +53,7 @@ export default function LoginPage() {
     <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
       <div className="bg-gradient-to-br from-white to-gray-50 rounded-3xl shadow-2xl w-full max-w-md p-10 border border-gray-200 animate-fadeIn">
         <h1 className="text-4xl font-extrabold text-center mb-2 text-gray-800">
-          Trustify
+          CSBS SYNC
         </h1>
         <p className="text-center text-gray-500 mb-10 text-lg">
           Stay connected. Learn. Collaborate. 🚀
@@ -102,7 +102,7 @@ export default function LoginPage() {
         </form>
 
         <footer className="mt-8 text-center text-xs text-gray-400">
-          © {new Date().getFullYear()} Trustify | Built with ❤️ by Students
+          © {new Date().getFullYear()} CSBS SYNC | Built with ❤️ by Students
         </footer>
       </div>
     </div>
